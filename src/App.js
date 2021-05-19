@@ -1,9 +1,13 @@
-function App() {
-  return (
+import React from "react";
+import Layout from "./hoc/Layout/Layout";
+import Quiz from './containers/Quiz/Quiz'
+
+const App = () => (
     <div className="App">
-      <h1>Hi!!</h1>
+        <Layout>
+            <Quiz/>
+        </Layout>
     </div>
-  );
-}
+)
 
 export default App;
