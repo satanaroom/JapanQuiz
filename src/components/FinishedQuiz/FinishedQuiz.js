@@ -29,17 +29,6 @@ const FinishedQuiz = props => {
                         </li>
                     )
                 })}
-
-                {/*<li>*/}
-                {/*    <strong>1. </strong>*/}
-                {/*    How are you?*/}
-                {/*    <i className={'fa fa-times ' + s.error}/>*/}
-                {/*</li>*/}
-                {/*<li>*/}
-                {/*    <strong>2. </strong>*/}
-                {/*    How are you?*/}
-                {/*    <i className={'fa fa-check ' + s.success}/>*/}
-                {/*</li>*/}
             </ul>
             <p>Правильно {successCount} из {props.quiz.length}</p>
             <div>
