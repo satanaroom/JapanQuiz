@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import s from './QuizList.module.css';
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 class QuizList extends Component {
     renderQuizes() {
@@ -15,6 +16,12 @@ class QuizList extends Component {
                 </li>
             )
         })
+    }
+
+    componentDidMount() {
+        axios.get('https://japan-quiz-dfd6a-default-rtdb.asia-southeast1.firebasedatabase.app/quiz.json').then(
+            response => console.log(response)
+        )
     }
 
     render() {
