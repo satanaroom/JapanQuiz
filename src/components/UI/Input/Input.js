@@ -1,7 +1,7 @@
 import s from './Input.module.css'
 
 function isInvalid({valid, touched, shouldValidate}) {
-    return!valid && shouldValidate && touched
+    return !valid && shouldValidate && touched
 }
 
 const Input = props => {
