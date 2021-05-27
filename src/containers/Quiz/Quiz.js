@@ -2,37 +2,17 @@ import React, {Component} from "react";
 import s from './Quiz.module.css';
 import ActiveQuiz from "../../components/ActiveQuiz/ActiveQuiz";
 import FinishedQuiz from "../../components/FinishedQuiz/FinishedQuiz";
+import axios from '../../axios/axios-quiz'
+import Loader from "../../components/UI/Loader/Loader";
 
 class Quiz extends Component {
     state = {
-        results: {}, // {[id]: success error}
+        results: {},
         isFinished: false,
         activeQuestion: 0,
-        answerState: null, // {[id]: 'success' 'error'}
-        quiz: [
-            {
-                question: 'Какой сейчас год?',
-                id: 1,
-                rightAnswerId: 2,
-                answers: [
-                    {text: '2022', id: 1},
-                    {text: '2021', id: 2},
-                    {text: '1994', id: 3},
-                    {text: '2078', id: 4}
-                ]
-            },
-            {
-                question: 'Какой ты человек?',
-                id: 2,
-                rightAnswerId: 1,
-                answers: [
-                    {text: 'обычный', id: 1},
-                    {text: 'нормальный', id: 2},
-                    {text: 'добрый', id: 3},
-                    {text: 'красивый', id: 4}
-                ]
-            }
-        ]
+        answerState: null,
+        quiz: [],
+        loading: true
     }
     onAnswerClickHandler = answerId => {
         if (this.state.answerState) {
@@ -73,10 +53,11 @@ class Quiz extends Component {
             results[question.id] = 'error'
             this.setState({
                 answerState: {[answerId]: 'error'},
-                results //ключ и значение совпадают, поэтому избавляемся от дублирования
+                results
             })
         }
     }
+
     isQuizFinished() {
         return this.state.activeQuestion + 1 === this.state.quiz.length
     }
@@ -90,13 +71,30 @@ class Quiz extends Component {
         })
     }
 
+    async componentDidMount() {
+        try {
+            const response = await axios.get(`/quizes/${this.props.match.params.id}.json`)
+            const quiz = response.data
+
+            this.setState({
+                quiz,
+                loading: false
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     render() {
         return (
             <div className={s.Quiz}>
                 <div className={s.QuizWrapper}>
                     <h1>Ответьте на все вопросы</h1>
+
                     {
-                        this.state.isFinished
+                        this.state.loading
+                            ? <Loader/>
+                            : this.state.isFinished
                             ? <FinishedQuiz
                                 results={this.state.results}
                                 quiz={this.state.quiz}
