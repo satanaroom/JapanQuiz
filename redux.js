@@ -30,7 +30,10 @@ const reducer = (state = initialState, action) => { // 2. Описано нач�
 
 // Store
 const store = redux.createStore(reducer) // 1. Создали store, куда передали функцию, которая изменяет данный store (reducer)
-console.log('1', store.getState())
+
+store.subscribe(() => {
+    console.log('Subscribe', store.getState())
+})
 
 // Actions
 const addCounter = {
@@ -38,10 +41,7 @@ const addCounter = {
 }
 
 store.dispatch(addCounter) // Передача объекта обычным методом
-console.log('2', store.getState())
 
 store.dispatch({type: 'SUB'}) // Передача объекта напрямую
-console.log('3', store.getState())
 
 store.dispatch({type: 'ADD_NUMBER', value: 10}) // Передача объекта с парметром
-console.log('4', store.getState())
